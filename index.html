@@ -7,16 +7,19 @@
 
   <style>
     :root{
-      --bg:#f5f7fb;
+      --bg:#eef4fb;                 /* (2) fundo premium */
       --panel:#ffffff;
+
       --primary:#0d78c1;
       --primary-2:#0b4f7d;
-      --primary-soft:rgba(13,120,193,.08);
+      --primary-soft:rgba(13,120,193,.10);
+
       --text:#0f172a;
       --sub:#475569;
-      --border:#e2e8f0;
-      --shadow:0 10px 30px rgba(15,23,42,.06);
-      --radius:16px;
+      --border:#dbe7f5;
+
+      --shadow:0 14px 40px rgba(15,23,42,.08);
+      --radius:18px;
     }
 
     *{ box-sizing:border-box; }
@@ -24,52 +27,57 @@
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
       color:var(--text);
+      background:
+        radial-gradient(900px 500px at 18% 0%, rgba(13,120,193,.12), transparent 60%),
+        radial-gradient(700px 450px at 100% 10%, rgba(11,79,125,.10), transparent 55%),
+        var(--bg);
     }
 
     .wrap{
       max-width:980px;
       margin:0 auto;
-      padding:18px 14px 26px;
+      padding:16px 12px 26px;
     }
 
-    /* ===== Banner ===== */
-    .hero{
-      margin:0 auto 14px;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid var(--border);
+    .panel{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(219,231,245,.95);
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
+      overflow:hidden; /* permite o banner colado */
+      backdrop-filter:saturate(1.1) blur(6px);
+    }
+
+    .content{ padding:16px; }
+
+    /* (1) Banner mesclado dentro do painel + fade */
+    .hero{
+      position:relative;
       background:#000;
+      border-bottom:1px solid rgba(219,231,245,.95);
+      overflow:hidden;
     }
     .hero img{
       width:100%;
       height:auto;
       display:block;
     }
-
-    .panel{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-    }
-
-    .headerBar{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
+    .heroFade{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:110px;
+      background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(238,244,251,1));
+      pointer-events:none;
     }
 
     .headerText h1{
       margin:0;
       font-size:18px;
-      font-weight:900;
+      font-weight:950;
       color:var(--primary);
       line-height:1.15;
+      letter-spacing:.2px;
     }
 
     .insta{
@@ -85,27 +93,16 @@
       line-height:1.35;
     }
 
-    .headerLogo{
-      flex:0 0 auto;
-      display:flex;
-      justify-content:flex-end;
-    }
-    .headerLogo img{
-      width:60px;
-      height:auto;
-      display:block;
-      object-fit:contain;
-      background:transparent;
-    }
-
     .disclaimerBalloon{
       margin-top:12px;
-      padding:10px 14px;
-      border-radius:12px;
-      background:#f8fafc;
-      border-left:4px solid var(--primary);
+      padding:11px 14px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(248,250,252,.95));
+      border:1px solid rgba(13,120,193,.14);
+      border-left:5px solid var(--primary);
       font-size:12px;
       color:#334155;
+      box-shadow:0 10px 22px rgba(15,23,42,.05);
     }
 
     .grid{
@@ -115,62 +112,51 @@
       margin-top:16px;
     }
 
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
+    .field{ display:flex; flex-direction:column; gap:6px; }
 
-    label{
-      font-size:12px;
-      color:var(--sub);
-    }
+    label{ font-size:12px; color:var(--sub); }
 
     input,select{
       width:100%;
-      padding:12px 12px;
+      padding:12px;
       border-radius:14px;
-      border:1px solid var(--border);
+      border:1px solid rgba(203,218,238,.95);
       font-size:14px;
       background:#fff;
+      box-shadow:0 8px 18px rgba(15,23,42,.04);
     }
 
     input:focus,select:focus{
       outline:none;
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(13,120,193,.15);
+      border-color:rgba(13,120,193,.8);
+      box-shadow:0 0 0 3px rgba(13,120,193,.15), 0 10px 24px rgba(15,23,42,.06);
     }
 
     .biotipoInfo{
       margin-top:10px;
       padding:12px;
-      border-radius:14px;
-      background:var(--primary-soft);
-      border:1px solid #dbeafe;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(13,120,193,.10), rgba(13,120,193,.06));
+      border:1px solid rgba(13,120,193,.16);
       font-size:12px;
       color:#334155;
       line-height:1.45;
     }
-
     .biotipoInfo strong{
       display:block;
       margin-bottom:6px;
       color:var(--primary-2);
+      font-weight:950;
     }
-
-    .biotipoInfo ul{
-      margin:8px 0 0 18px;
-      padding:0;
-    }
-
+    .biotipoInfo ul{ margin:8px 0 0 18px; padding:0; }
     .biotipoInfo .mini{
       margin-top:10px;
       padding:10px 12px;
-      border-radius:12px;
-      background:#fff;
+      border-radius:14px;
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(13,120,193,.18);
+      box-shadow:0 10px 22px rgba(15,23,42,.05);
     }
-    .biotipoInfo .mini b{ color:var(--primary-2); }
 
     .cards{
       display:grid;
@@ -180,23 +166,24 @@
     }
 
     .card{
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:16px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(203,218,238,.85);
+      border-radius:18px;
       padding:14px;
+      box-shadow:0 12px 26px rgba(15,23,42,.06);
     }
 
     .card h3{
       margin:0 0 8px 0;
       font-size:12px;
       color:var(--sub);
-      font-weight:700;
+      font-weight:800;
     }
 
     .big{
       font-size:26px;
-      font-weight:900;
-      color:#1e293b;
+      font-weight:950;
+      color:#0f172a;
       line-height:1;
     }
 
@@ -210,25 +197,14 @@
     .howBox{
       margin-top:10px;
       padding:12px;
-      border-radius:14px;
-      background:var(--primary-soft);
-      border:1px solid #dbeafe;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(13,120,193,.10), rgba(13,120,193,.06));
+      border:1px solid rgba(13,120,193,.16);
+      box-shadow:0 12px 26px rgba(15,23,42,.05);
     }
-    .howTitle{
-      font-weight:900;
-      color:var(--primary-2);
-      font-size:12px;
-      margin-bottom:6px;
-    }
-    .howList{
-      margin:0;
-      padding-left:16px;
-    }
-    .howList li{
-      margin:6px 0;
-      font-size:12px;
-      color:#334155;
-    }
+    .howTitle{ font-weight:950; color:var(--primary-2); font-size:12px; margin-bottom:6px; }
+    .howList{ margin:0; padding-left:16px; }
+    .howList li{ margin:6px 0; font-size:12px; color:#334155; }
 
     .bfScaleWrap{ margin-top:12px; }
     .bfTopRow{
@@ -242,26 +218,26 @@
       font-size:11px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(13,120,193,.22);
-      background:#fff;
+      border:1px solid rgba(13,120,193,.20);
+      background:rgba(255,255,255,.95);
       color:var(--primary-2);
       white-space:nowrap;
-      font-weight:800;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(15,23,42,.05);
     }
     .bfScale{
       position:relative;
       height:14px;
       border-radius:999px;
       overflow:hidden;
-      border:1px solid var(--border);
-      background:
-        linear-gradient(90deg,
-          rgba(13,120,193,.18) 0%,
-          rgba(13,120,193,.10) 25%,
-          rgba(13,120,193,.06) 50%,
-          rgba(13,120,193,.10) 75%,
-          rgba(13,120,193,.18) 100%
-        );
+      border:1px solid rgba(203,218,238,.95);
+      background:linear-gradient(90deg,
+        rgba(13,120,193,.22) 0%,
+        rgba(13,120,193,.12) 25%,
+        rgba(13,120,193,.08) 50%,
+        rgba(13,120,193,.12) 75%,
+        rgba(13,120,193,.22) 100%
+      );
     }
     .bfNeedle{
       position:absolute;
@@ -279,7 +255,7 @@
       border-radius:50%;
       background:var(--primary-2);
       transform:translate(-50%,-50%);
-      box-shadow:0 6px 14px rgba(11,79,125,.25);
+      box-shadow:0 10px 18px rgba(11,79,125,.25);
     }
     .bfLabels{
       display:flex;
@@ -288,37 +264,39 @@
       font-size:11px;
       color:#64748b;
     }
-    .bfInsight{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      background:#ffffff;
-      border:1px solid rgba(13,120,193,.18);
-      font-size:12px;
-      color:#0f172a;
-      line-height:1.45;
-    }
-    .bfInsight b{ color:var(--primary-2); }
     .bfLegend{
       margin-top:10px;
       padding:10px 12px;
-      border-radius:12px;
-      background:#f8fafc;
-      border:1px solid var(--border);
+      border-radius:14px;
+      background:rgba(248,250,252,.92);
+      border:1px solid rgba(203,218,238,.9);
       font-size:12px;
       color:#334155;
       line-height:1.45;
     }
+    .bfInsight{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(13,120,193,.16);
+      font-size:12px;
+      color:#0f172a;
+      line-height:1.45;
+      box-shadow:0 10px 22px rgba(15,23,42,.05);
+    }
+    .bfInsight b{ color:var(--primary-2); }
 
     .resultBox{
       margin-top:12px;
       padding:14px;
-      border-radius:16px;
-      background:var(--primary-soft);
-      border:1px solid #dbeafe;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(13,120,193,.10), rgba(13,120,193,.06));
+      border:1px solid rgba(13,120,193,.16);
+      box-shadow:0 14px 30px rgba(15,23,42,.06);
     }
     .resultTitle{
-      font-weight:900;
+      font-weight:950;
       color:var(--primary-2);
       margin-bottom:8px;
     }
@@ -329,48 +307,49 @@
       line-height:1.45;
     }
 
-    .ctaBox{
-      margin-top:16px;
-      text-align:center;
-    }
+    .ctaBox{ margin-top:16px; text-align:center; }
     .ctaButton{
       display:block;
       width:100%;
       padding:14px 16px;
-      border-radius:14px;
+      border-radius:16px;
       background:linear-gradient(135deg,var(--primary),var(--primary-2));
       color:#fff;
-      font-weight:900;
+      font-weight:950;
       font-size:14px;
       text-decoration:none;
-      box-shadow:0 10px 25px rgba(13,120,193,.28);
+      box-shadow:0 14px 30px rgba(13,120,193,.30);
+      transform:translateY(0);
+      transition:transform .12s ease, box-shadow .12s ease;
     }
-    .ctaSub{
-      margin-top:6px;
-      font-size:12px;
-      color:#64748b;
+    .ctaButton:active{
+      transform:translateY(1px);
+      box-shadow:0 10px 22px rgba(13,120,193,.24);
     }
+    .ctaSub{ margin-top:6px; font-size:12px; color:#64748b; }
 
     .aviso{
       margin-top:14px;
       padding:14px;
-      border-radius:14px;
-      background:#fff7ed;
-      border:1px solid #fed7aa;
+      border-radius:16px;
+      background:rgba(255,247,237,.92);
+      border:1px solid rgba(254,215,170,.95);
       font-size:12px;
       color:#7c2d12;
       line-height:1.45;
+      box-shadow:0 12px 26px rgba(15,23,42,.05);
     }
     .aviso strong{
       display:block;
       margin-bottom:6px;
       color:#9a3412;
+      font-weight:950;
     }
 
     .footer{
       margin-top:16px;
       padding-top:12px;
-      border-top:1px solid var(--border);
+      border-top:1px solid rgba(203,218,238,.85);
       text-align:center;
       font-size:12px;
       color:#64748b;
@@ -380,30 +359,13 @@
     .hidden{ display:none; }
 
     @media(min-width:860px){
-      .wrap{ padding:26px 20px 34px; }
-      .panel{ padding:20px; }
+      .wrap{ padding:22px 18px 34px; }
+      .content{ padding:20px; }
 
-      .grid{
-        grid-template-columns:1fr 1fr;
-        gap:14px;
-      }
-      .cards{
-        grid-template-columns:1fr 1fr 1fr;
-        gap:14px;
-      }
+      .grid{ grid-template-columns:1fr 1fr; gap:14px; }
+      .cards{ grid-template-columns:1fr 1fr 1fr; gap:14px; }
 
       .headerText h1{ font-size:20px; }
-
-      .headerLogo img{
-        width:auto;
-        max-height:100px;
-        max-width:220px;
-        background:#fff;
-        padding:8px 10px;
-        border:1px solid var(--border);
-        border-radius:12px;
-        box-shadow:0 8px 20px rgba(15,23,42,.06);
-      }
 
       .ctaButton{
         display:inline-block;
@@ -412,211 +374,202 @@
         border-radius:999px;
       }
 
-      /* no desktop, deixa o banner um pouco mais “cinema” */
-      .hero img{ max-height:360px; object-fit:cover; }
+      .hero img{ max-height:320px; object-fit:cover; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
-    <!-- ✅ Banner no topo -->
-    <div class="hero">
-      <img src="banner.png?v=1" alt="Rafael Rocha • Consultoria Nutricional">
-    </div>
-
     <div class="panel">
 
-      <div class="headerBar">
+      <!-- (1) Banner mesclado -->
+      <div class="hero">
+        <img src="banner.png" alt="Rafael Rocha • Consultoria Nutricional">
+        <div class="heroFade"></div>
+      </div>
+
+      <div class="content">
         <div class="headerText">
           <h1>Rafael Nutri • Calculadora Nutricional</h1>
           <div class="insta">@rafaelnutripf</div>
           <p>Estimativa de percentual de gordura, calorias diárias e macronutrientes.</p>
         </div>
 
-        <div class="headerLogo">
-          <img src="logo.png?v=14" alt="Rafael Nutri">
-        </div>
-      </div>
-
-      <div class="disclaimerBalloon">
-        Ferramenta educativa. Resultados são estimativas e podem variar conforme método de avaliação.
-      </div>
-
-      <div class="grid">
-        <div class="field">
-          <label>Sexo</label>
-          <select id="sexo">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select>
+        <div class="disclaimerBalloon">
+          Ferramenta educativa. Resultados são estimativas e podem variar conforme método de avaliação.
         </div>
 
-        <div class="field">
-          <label>Biotipo (obrigatório)</label>
-          <select id="biotipo">
-            <option value="ecto">Ectomorfo</option>
-            <option value="meso" selected>Mesomorfo</option>
-            <option value="endo">Endomorfo</option>
-          </select>
-
-          <div class="biotipoInfo">
-            <strong>Como escolher o biotipo (prático)</strong>
-            <ul>
-              <li><b>Ectomorfo:</b> estrutura mais fina; dificuldade para ganhar peso/massa.</li>
-              <li><b>Mesomorfo:</b> equilíbrio; tende a ganhar músculo com mais facilidade.</li>
-              <li><b>Endomorfo:</b> ganha gordura com facilidade (abdômen/quadril).</li>
-            </ul>
-            <div class="mini">
-              <b>Se estiver em dúvida:</b> marque <b>Mesomorfo</b>.<br>
-              “engorda fácil” → <b>Endomorfo</b> | “não ganha peso” → <b>Ectomorfo</b>.
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Idade</label>
-          <input id="idade" type="number" placeholder="Ex: 28">
-        </div>
-
-        <div class="field">
-          <label>Peso (kg)</label>
-          <input id="peso" type="number" step="0.1" placeholder="Ex: 72,5">
-        </div>
-
-        <div class="field">
-          <label>Altura (cm)</label>
-          <input id="altura" type="number" placeholder="Ex: 175">
-        </div>
-
-        <div class="field">
-          <label>Cintura (cm) (opcional para BF)</label>
-          <input id="cintura" type="number" step="0.1" placeholder="Ex: 82">
-        </div>
-
-        <div class="field">
-          <label>Pescoço (cm) (opcional para BF)</label>
-          <input id="pescoco" type="number" step="0.1" placeholder="Ex: 38">
-        </div>
-
-        <div class="field hidden" id="quadWrap">
-          <label>Quadril (cm) (opcional para BF - feminino)</label>
-          <input id="quadril" type="number" step="0.1" placeholder="Ex: 98">
-        </div>
-
-        <div class="field">
-          <label>Frequência de treino</label>
-          <select id="atividade">
-            <option value="1.08">Não treina</option>
-            <option value="1.20">Treina 3x/sem</option>
-            <option value="1.30">Treina até 5x/sem</option>
-            <option value="1.50">Treina 7x/sem</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Objetivo</label>
-          <select id="objetivo">
-            <option value="manter">Manter</option>
-            <option value="ganhar">Ganhar massa (+300 kcal)</option>
-            <option value="perder">Perder gordura (-300 kcal)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Percentual de Gordura (BF)</h3>
-
-          <div id="bfNormal">
-            <div class="big" id="outBf">—</div>
-            <div class="small" id="outBfInfo">
-              Preencha cintura + pescoço (e quadril no feminino) para estimar.
-            </div>
-
-            <div class="bfScaleWrap hidden" id="bfScaleWrap">
-              <div class="bfTopRow">
-                <div class="small" style="margin:0">Classificação</div>
-                <div class="bfBadge" id="bfBadge">—</div>
-              </div>
-
-              <div class="bfScale">
-                <div class="bfNeedle" id="bfNeedle" style="left:50%"></div>
-                <div class="bfDot" id="bfDot" style="left:50%"></div>
-              </div>
-
-              <div class="bfLabels">
-                <span id="bfMinLbl">0%</span>
-                <span id="bfMaxLbl">40%</span>
-              </div>
-
-              <div class="bfLegend" id="bfLegend">—</div>
-              <div class="bfInsight" id="bfInsight">—</div>
-            </div>
+        <div class="grid">
+          <div class="field">
+            <label>Sexo</label>
+            <select id="sexo">
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
           </div>
 
-          <div id="bfHow" class="hidden">
-            <div class="howBox">
-              <div class="howTitle">Como medir (fita métrica)</div>
-              <ul class="howList">
-                <li><b>Cintura:</b> na altura do umbigo, relaxado, sem “puxar barriga”.</li>
-                <li><b>Pescoço:</b> no meio do pescoço, fita encostada sem apertar.</li>
-                <li><b>Quadril (feminino):</b> na parte mais larga do bumbum.</li>
-                <li>Faça <b>2 medidas</b> e use a <b>média</b>.</li>
+          <div class="field">
+            <label>Biotipo (obrigatório)</label>
+            <select id="biotipo">
+              <option value="ecto">Ectomorfo</option>
+              <option value="meso" selected>Mesomorfo</option>
+              <option value="endo">Endomorfo</option>
+            </select>
+
+            <div class="biotipoInfo">
+              <strong>Como escolher o biotipo (prático)</strong>
+              <ul>
+                <li><b>Ectomorfo:</b> estrutura mais fina; dificuldade para ganhar peso/massa.</li>
+                <li><b>Mesomorfo:</b> equilíbrio; tende a ganhar músculo com mais facilidade.</li>
+                <li><b>Endomorfo:</b> ganha gordura com facilidade (abdômen/quadril).</li>
               </ul>
+              <div class="mini">
+                <b>Se estiver em dúvida:</b> marque <b>Mesomorfo</b>.<br>
+                “engorda fácil” → <b>Endomorfo</b> | “não ganha peso” → <b>Ectomorfo</b>.
+              </div>
             </div>
-            <div class="small" style="margin-top:10px">
-              Sem essas medidas, a calculadora mostra TMB e calorias diárias, mas não estima BF.
-            </div>
+          </div>
+
+          <div class="field">
+            <label>Idade</label>
+            <input id="idade" type="number" placeholder="Ex: 28">
+          </div>
+
+          <div class="field">
+            <label>Peso (kg)</label>
+            <input id="peso" type="number" step="0.1" placeholder="Ex: 72,5">
+          </div>
+
+          <div class="field">
+            <label>Altura (cm)</label>
+            <input id="altura" type="number" placeholder="Ex: 175">
+          </div>
+
+          <div class="field">
+            <label>Cintura (cm) (opcional para BF)</label>
+            <input id="cintura" type="number" step="0.1" placeholder="Ex: 82">
+          </div>
+
+          <div class="field">
+            <label>Pescoço (cm) (opcional para BF)</label>
+            <input id="pescoco" type="number" step="0.1" placeholder="Ex: 38">
+          </div>
+
+          <div class="field hidden" id="quadWrap">
+            <label>Quadril (cm) (opcional para BF - feminino)</label>
+            <input id="quadril" type="number" step="0.1" placeholder="Ex: 98">
+          </div>
+
+          <div class="field">
+            <label>Frequência de treino</label>
+            <select id="atividade">
+              <option value="1.08">Não treina</option>
+              <option value="1.20">Treina 3x/sem</option>
+              <option value="1.30">Treina até 5x/sem</option>
+              <option value="1.50">Treina 7x/sem</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Objetivo</label>
+            <select id="objetivo">
+              <option value="manter">Manter</option>
+              <option value="ganhar">Ganhar massa (+300 kcal)</option>
+              <option value="perder">Perder gordura (-300 kcal)</option>
+            </select>
           </div>
         </div>
 
-        <div class="card">
-          <h3>Taxa Metabólica Basal (TMB)</h3>
-          <div class="big" id="outTmb">—</div>
-          <div class="small">Energia mínima em repouso.</div>
+        <div class="cards">
+          <div class="card">
+            <h3>Percentual de Gordura (BF)</h3>
+
+            <div id="bfNormal">
+              <div class="big" id="outBf">—</div>
+              <div class="small" id="outBfInfo">
+                Preencha cintura + pescoço (e quadril no feminino) para estimar.
+              </div>
+
+              <div class="bfScaleWrap hidden" id="bfScaleWrap">
+                <div class="bfTopRow">
+                  <div class="small" style="margin:0">Classificação</div>
+                  <div class="bfBadge" id="bfBadge">—</div>
+                </div>
+
+                <div class="bfScale">
+                  <div class="bfNeedle" id="bfNeedle" style="left:50%"></div>
+                  <div class="bfDot" id="bfDot" style="left:50%"></div>
+                </div>
+
+                <div class="bfLabels">
+                  <span id="bfMinLbl">0%</span>
+                  <span id="bfMaxLbl">40%</span>
+                </div>
+
+                <div class="bfLegend" id="bfLegend">—</div>
+                <div class="bfInsight" id="bfInsight">—</div>
+              </div>
+            </div>
+
+            <div id="bfHow" class="hidden">
+              <div class="howBox">
+                <div class="howTitle">Como medir (fita métrica)</div>
+                <ul class="howList">
+                  <li><b>Cintura:</b> na altura do umbigo, relaxado, sem “puxar barriga”.</li>
+                  <li><b>Pescoço:</b> no meio do pescoço, fita encostada sem apertar.</li>
+                  <li><b>Quadril (feminino):</b> na parte mais larga do bumbum.</li>
+                  <li>Faça <b>2 medidas</b> e use a <b>média</b>.</li>
+                </ul>
+              </div>
+              <div class="small" style="margin-top:10px">
+                Sem essas medidas, a calculadora mostra TMB e calorias diárias, mas não estima BF.
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Taxa Metabólica Basal (TMB)</h3>
+            <div class="big" id="outTmb">—</div>
+            <div class="small">Energia mínima em repouso.</div>
+          </div>
+
+          <div class="card">
+            <h3>Calorias diárias (com treino/objetivo)</h3>
+            <div class="big" id="outTarget">—</div>
+            <div class="small" id="outTargetInfo">Preencha idade, peso e altura.</div>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Calorias diárias (com treino/objetivo)</h3>
-          <div class="big" id="outTarget">—</div>
-          <div class="small" id="outTargetInfo">Preencha idade, peso e altura.</div>
+        <div class="resultBox hidden" id="finalBox">
+          <div class="resultTitle">Plano nutricional</div>
+          <div class="resultLine" id="finalLine1"></div>
+          <div class="resultLine" id="finalP"></div>
+          <div class="resultLine" id="finalC"></div>
+          <div class="resultLine" id="finalF"></div>
+          <div class="resultLine" style="font-weight:950;margin-top:8px" id="finalSummary"></div>
+        </div>
+
+        <div class="ctaBox">
+          <a class="ctaButton" target="_blank"
+             href="https://wa.me/5554991766684?text=Oi%20Rafael!%20Usei%20a%20calculadora%20nutricional%20do%20seu%20site%20e%20quero%20uma%20avalia%C3%A7%C3%A3o%20personalizada.">
+            Quero uma avaliação personalizada
+          </a>
+          <div class="ctaSub">Atendimento individual • Consultoria online</div>
+        </div>
+
+        <div class="aviso">
+          <strong>⚠️ Aviso Importante</strong>
+          Esta calculadora é apenas para fins educacionais. Os resultados são estimativas baseadas em fórmulas padrão
+          e podem não refletir com precisão sua composição corporal real. Para avaliações mais precisas,
+          consulte um profissional de saúde qualificado.
+        </div>
+
+        <div class="footer">
+          Criado por <b>Rafael Nutri</b> • @rafaelnutripf<br/>
+          Consultoria online
         </div>
       </div>
-
-      <div class="resultBox hidden" id="finalBox">
-        <div class="resultTitle">Plano nutricional</div>
-        <div class="resultLine" id="finalLine1"></div>
-        <div class="resultLine" id="finalP"></div>
-        <div class="resultLine" id="finalC"></div>
-        <div class="resultLine" id="finalF"></div>
-        <div class="resultLine" style="font-weight:900;margin-top:8px" id="finalSummary"></div>
-      </div>
-
-      <div class="ctaBox">
-        <a
-          class="ctaButton"
-          target="_blank"
-          href="https://wa.me/5554991766684?text=Oi%20Rafael!%20Usei%20a%20calculadora%20nutricional%20do%20seu%20site%20e%20quero%20uma%20avalia%C3%A7%C3%A3o%20personalizada."
-        >
-          Quero uma avaliação personalizada
-        </a>
-        <div class="ctaSub">Atendimento individual • Consultoria online</div>
-      </div>
-
-      <div class="aviso">
-        <strong>⚠️ Aviso Importante</strong>
-        Esta calculadora é apenas para fins educacionais. Os resultados são estimativas baseadas em fórmulas padrão
-        e podem não refletir com precisão sua composição corporal real. Para avaliações mais precisas,
-        consulte um profissional de saúde qualificado.
-      </div>
-
-      <div class="footer">
-        Criado por <b>Rafael Nutri</b> • @rafaelnutripf<br/>
-        Consultoria online
-      </div>
-
     </div>
   </div>
 
@@ -690,7 +643,7 @@
           { to:24, label:"Aceitável/Moderado", desc:"Nível considerado aceitável, mas aproximando-se da faixa de risco." },
           { to:35, label:"Alto/Obesidade", desc:"Indica excesso de gordura e aumento do risco de doenças relacionadas à obesidade." },
         ],
-        legend:"Homem: 2–5 Gordura Essencial • 6–13 Atletas/Fitness • 14–20 Saudável/Normal • 21–24 Aceitável/Moderado • ≥25 Alto/Obesidade"
+        legend:"Homem: 2–5 Essencial • 6–13 Atletas/Fitness • 14–20 Saudável/Normal • 21–24 Aceitável/Moderado • ≥25 Alto/Obesidade"
       };
     }
 
@@ -718,9 +671,7 @@
       $("bfDot").style.left = pos + "%";
     }
 
-    function hideScale(){
-      $("bfScaleWrap").classList.add("hidden");
-    }
+    function hideScale(){ $("bfScaleWrap").classList.add("hidden"); }
 
     function calc(){
       const sexo = $("sexo").value;
@@ -766,11 +717,7 @@
         $("finalBox").classList.add("hidden");
       }
 
-      const medidasOk =
-        altura &&
-        cintura &&
-        pescoco &&
-        (sexo === "M" || (sexo === "F" && quadril));
+      const medidasOk = altura && cintura && pescoco && (sexo === "M" || (sexo === "F" && quadril));
 
       if(!medidasOk){
         $("outBf").innerText = "—";
@@ -790,7 +737,6 @@
 
       $("outBf").innerText = r1(bf) + "%";
       $("outBfInfo").innerText = "Estimativa calibrada + ajuste de biotipo.";
-
       setScale(sexo, bf);
     }
 
